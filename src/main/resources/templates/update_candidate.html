@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Candidate | Metallic Terminal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            /* Metallic Industrial Palette */
+            --zinc-light: #e0e9ef;
+            --zinc-mid: #cbd5dc;
+            --zinc-dark: #97a1a8;
+            --metal-blue: #004a99;
+            --metal-blue-dark: #002d5d;
+            --accent-gold: #ffc300;
+        }
+
+        body {
+            background: linear-gradient(145deg, var(--zinc-light), var(--zinc-mid));
+            min-height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding-bottom: 50px;
+        }
+
+        /* 3D Metallic Nav */
+        .nav-3d {
+            background: linear-gradient(180deg, var(--metal-blue), var(--metal-blue-dark));
+            margin: 20px; padding: 15px 30px; border-radius: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 2px solid rgba(255,255,255,0.3);
+            box-shadow: 0 8px 0 #002144, 0 15px 25px rgba(0,0,0,0.4);
+        }
+
+        .nav-3d h2 { color: #ffffff; font-weight: 900; margin: 0; letter-spacing: 2px; font-size: 1.4rem; }
+
+        .btn-back-metal {
+            background: var(--zinc-light);
+            color: var(--metal-blue-dark);
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            box-shadow: 0 4px 0 var(--zinc-dark);
+            transition: 0.1s;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-back-metal:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--zinc-dark); }
+
+        /* Chassis Container (The Terminal Card) */
+        .evm-chassis {
+            max-width: 500px; margin: 50px auto;
+            background: var(--zinc-mid); border-radius: 40px; padding: 40px;
+            box-shadow: 20px 20px 40px #9daab1, -20px -20px 40px #ffffff;
+            border: 1px solid rgba(255,255,255,0.5);
+            text-align: center;
+        }
+
+        .section-icon {
+            width: 70px; height: 70px;
+            background: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px auto;
+            color: var(--metal-blue); font-size: 2rem;
+            box-shadow: inset 4px 4px 8px var(--zinc-dark);
+        }
+
+        /* Metallic Inputs */
+        .form-group { margin-bottom: 25px; text-align: left; }
+
+        .form-label {
+            font-weight: 800; color: var(--metal-blue-dark);
+            font-size: 0.75rem; text-transform: uppercase;
+            margin-bottom: 8px; display: block; letter-spacing: 1px;
+        }
+
+        .input-metal-wrapper { position: relative; }
+        .input-metal-wrapper i {
+            position: absolute; left: 15px; top: 15px;
+            color: var(--metal-blue);
+        }
+
+        .form-control-metal {
+            width: 100%; border-radius: 15px;
+            padding: 12px 15px 12px 45px; border: none;
+            background: var(--zinc-light);
+            box-shadow: inset 4px 4px 8px #b1bcc3, inset -4px -4px 8px #ffffff;
+            color: var(--metal-blue-dark); font-weight: 700;
+            transition: 0.3s;
+        }
+        .form-control-metal:focus {
+            outline: none; background: white;
+            box-shadow: inset 2px 2px 5px #b1bcc3;
+        }
+
+        /* Industrial Push Buttons */
+        .btn-push-save {
+            background: linear-gradient(180deg, #28a745, #1e7e34);
+            color: white; width: 100%; padding: 15px;
+            border-radius: 15px; border: none; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 6px 0 #145523, 0 10px 20px rgba(0,0,0,0.2);
+            transition: 0.1s; margin-bottom: 20px;
+        }
+        .btn-push-save:active { transform: translateY(4px); box-shadow: 0 2px 0 #145523; }
+
+        .btn-push-cancel {
+            background: var(--zinc-light);
+            color: #d90429; width: 100%; padding: 12px;
+            border-radius: 15px; border: 1px solid rgba(255,255,255,0.8);
+            font-weight: 800; text-decoration: none; display: block;
+            box-shadow: 4px 4px 8px #b1bcc3, -4px -4px 8px #ffffff;
+            transition: 0.2s;
+        }
+        .btn-push-cancel:hover { background: #fff; }
+
+        .error-msg { color: #d90429; font-size: 0.7rem; font-weight: 800; margin-top: 5px; display: block; }
+    </style>
+</head>
+<body>
+
+<nav class="nav-3d">
+    <h2>EVM <span style="font-weight: 300; opacity: 0.8;">| MODIFICATION</span></h2>
+    <a th:href="@{/member/Member}" class="btn-back-metal">
+        <i class="fas fa-chevron-left"></i> BACK
+    </a>
+</nav>
+
+<div class="container">
+    <div class="evm-chassis">
+        <div class="section-icon">
+            <i class="fas fa-user-edit"></i>
+        </div>
+        <h4 class="fw-bold mb-4" style="color: var(--metal-blue-dark)">UPDATE CANDIDATE</h4>
+
+        <form th:object="${candidate_update}" th:method="post" th:action="@{/member/candidate_update_data}" id="updateForm">
+
+            <input type="hidden" th:field="*{email}">
+
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <div class="input-metal-wrapper">
+                    <i class="fas fa-signature"></i>
+                    <input class="form-control-metal" type="text" th:field="*{name}" required>
+                </div>
+                <span class="error-msg" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+
+            <div class="form-group mb-5">
+                <label class="form-label">Political Party</label>
+                <div class="input-metal-wrapper">
+                    <i class="fas fa-flag"></i>
+                    <input class="form-control-metal" type="text" th:field="*{party}" required>
+                </div>
+                <span class="error-msg" th:if="${#fields.hasErrors('party')}" th:errors="*{party}"></span>
+            </div>
+
+            <button type="submit" class="btn-push-save">
+                <i class="fas fa-check-circle me-2"></i> Save Changes
+            </button>
+
+            <a th:href="@{/member/Member}" class="btn-push-cancel">
+                <i class="fas fa-times me-1"></i> Discard
+            </a>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+    document.getElementById('updateForm').onsubmit = function() {
+        const btn = this.querySelector('.btn-push-save');
+        btn.style.background = '#6c757d';
+        btn.innerHTML = '<i class="fas fa-sync fa-spin me-2"></i> Processing...';
+    };
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
