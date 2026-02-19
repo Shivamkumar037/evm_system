@@ -108,16 +108,7 @@ public class CandidateService implements CandidateDao {
     }
 
     public void candidateInitialize(){
-       List<Candidate> list=candidateRepo.findAll();
-       if(list==null){
-           return;
-       }else {
-           list.forEach(candidate->{
-               candidate.setTotalVote(0l);
-           });
-           candidateRepo.saveAll(list);
-
-       }
+           candidateRepo.deleteAll();
     }
 
 
