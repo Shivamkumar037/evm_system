@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Create - Voting System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #003566;
+            --neon-blue: #00a8e8;
+            --accent-orange: #ffc300;
+            --bg-light: #e0e5ec;
+            --error-red: #d90429;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 3D Header */
+        .header-3d {
+            background: var(--primary-blue);
+            padding: 15px 25px;
+            border-bottom: 5px solid var(--neon-blue);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-3d h1 {
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin: 0;
+            font-size: 1.4rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* 3D Cancel Button */
+        .btn-cancel {
+            background: #f8f9fa;
+            color: #6c757d;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            box-shadow: 0 4px 0 #bdc3c7;
+            transition: all 0.1s;
+        }
+
+        .btn-cancel:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #bdc3c7;
+        }
+
+        /* Main Registration Card */
+        .registration-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+            padding: 40px 20px;
+        }
+
+        .signup-card {
+            width: 100%;
+            max-width: 480px;
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 35px;
+            box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .signup-card h2 {
+            color: var(--primary-blue);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .header-accent {
+            width: 60px;
+            height: 5px;
+            background: var(--accent-orange);
+            margin: 0 auto 25px auto;
+            border-radius: 10px;
+        }
+
+        /* Input Styling 3D */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            font-weight: 700;
+            color: var(--primary-blue);
+            font-size: 0.85rem;
+            margin-left: 5px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control {
+            border-radius: 12px;
+            padding: 12px 15px;
+            border: none;
+            background: #e0e5ec;
+            box-shadow: inset 4px 4px 8px #b8b9be, inset -4px -4px 8px #ffffff;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .form-control:focus {
+            outline: none;
+            background: #e0e5ec;
+            box-shadow: inset 2px 2px 5px #b8b9be, inset -2px -2px 5px #ffffff, 0 0 8px rgba(0, 168, 232, 0.2);
+        }
+
+        /* Error Text */
+        .error-message {
+            color: var(--error-red);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 5px;
+            padding-left: 5px;
+            display: block;
+        }
+
+        /* Green 3D Submit Button */
+        .btn-create {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 20px;
+            box-shadow: 0 6px 0 #1e7e34;
+            transition: all 0.1s;
+            cursor: pointer;
+        }
+
+        .btn-create:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #1e7e34;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header-3d">
+    <h1>Candidate Portal</h1>
+    <a th:href="@{/member/Member}" class="btn-cancel">← CANCEL</a>
+</header>
+
+<div class="registration-container">
+    <div class="signup-card">
+        <h2>Register Candidate</h2>
+        <div class="header-accent"></div>
+
+        <form th:object="${candidate_signup}" th:method="post" th:action="@{/member/signup}">
+
+            <div class="form-group">
+                <label class="form-label" for="name">FULL NAME</label>
+                <input class="form-control" type="text" th:field="*{name}" placeholder="Enter candidate's full name" id="name">
+                <div class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="email">EMAIL ADDRESS</label>
+                <input class="form-control" type="email" th:field="*{email}" placeholder="name@example.com" id="email">
+                <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">ACCESS PASSWORD</label>
+                <input class="form-control" type="password" th:field="*{password}" placeholder="Minimum 6 characters" id="password">
+                <div class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="party">POLITICAL PARTY</label>
+                <input class="form-control" type="text" th:field="*{party}" placeholder="Enter party short name" id="party">
+                <div class="error-message" th:if="${#fields.hasErrors('party')}" th:errors="*{party}"></div>
+            </div>
+
+            <button class="btn-create shadow" type="submit">Create Candidate Record</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
