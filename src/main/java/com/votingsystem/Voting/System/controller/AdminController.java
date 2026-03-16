@@ -31,8 +31,6 @@ public class AdminController {
     private final CandidateService candidateService;
     private final UserService userService;
     private final VotingService votingService;
-
-    // 1. Create Member Form Load
     @GetMapping("/create_member")
     public String create(Model model) {
         // model.addAttribute("", new SignupRequestDto()); <-- Ye galat tha (Empty key)
@@ -42,12 +40,11 @@ public class AdminController {
         return "signupmemberr";
     }
 
-    // 2. Signup Member Process
     @PostMapping("/signup_MemberData")
     public String signup(@Valid @ModelAttribute("signup_user") SignupRequestDto signupRequestDto,
                          BindingResult bindingResult, Model model) {
 
-        // Age Validation Logic
+  
         if (signupRequestDto.getDob() != null) {
             int age = Period.between(signupRequestDto.getDob(), LocalDate.now()).getYears();
             if (age < 18) {
@@ -69,7 +66,7 @@ public class AdminController {
         }
     }
 
-    // 3. Admin Dashboard
+  
     @GetMapping("/Admin")
     public String dashboard(Model model) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -81,10 +78,10 @@ public class AdminController {
         model.addAttribute("InactiveCandidates", candidateService.AllInActiveCandidate());
         model.addAttribute("totalUsers", userService.getAllUsersCount());
 
-        return "Admin"; // Make sure file is Admin.html or admin.html (Case sensitive on Render)
+        return "Admin";
     }
 
-    // 4. Status Change Logic
+
     @GetMapping("/statuschange")
     public String statuschange(Model model) {
         String status = electionService.StatusChange();
