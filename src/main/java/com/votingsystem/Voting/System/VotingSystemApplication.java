@@ -24,16 +24,15 @@ public class VotingSystemApplication {
     @Bean
     public CommandLineRunner defaultconfig(UserRepo userService, PasswordEncoder passwordEncoder) {
         return args -> {
-            // 1. ADMIN Create Karein
+          
             createSystemUser(passwordEncoder,userService, "admin@gmail.com", "System Admin", "admin@123", Role.ROLE_Admin);
 
-            // 2. MEMBER Create Karein
+      
             createSystemUser(passwordEncoder,userService, "member@gmail.com", "Election Member", "member@123", Role.ROLE_Member);
 
-            // 3. VOTER Create Karein
             createSystemUser(passwordEncoder,userService, "voter@gmail.com", "General Voter", "voter@123", Role.ROLE_Voter);
 
-            System.out.println("✅ [System Check]: Default users initialization complete.");
+            System.out.println("user completed");
         };
     }
 
