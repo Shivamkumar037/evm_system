@@ -34,8 +34,8 @@ public class CandidateService implements CandidateDao {
 
         Candidate candidate = modelMapper.map(requestDto, Candidate.class);
         candidate.setPassword(passwordEncoder.encode(requestDto.getPassword()));
-        candidate.setIsverified(false); // Admin verification required
-        candidate.setTotalVote(0l);      // Initial votes
+        candidate.setIsverified(false); 
+        candidate.setTotalVote(0l);     
 
         Candidate savedCandidate = candidateRepo.save(candidate);
         return modelMapper.map(savedCandidate, CandidateResponceDto.class);
@@ -57,7 +57,7 @@ public class CandidateService implements CandidateDao {
         Candidate existingCandidate = candidateRepo.findByEmail(requestDto.getEmail().trim())
                 .orElseThrow(() -> new CandidateNotExistException("Candidate not found to update"));
 
-        // Password ko purana hi rehne dete hain agar DTO mein password null/empty hai
+     
         String oldPassword = existingCandidate.getPassword();
 
         modelMapper.map(requestDto, existingCandidate);
@@ -80,7 +80,7 @@ public class CandidateService implements CandidateDao {
 
     @Override
     public List<CandidateResponceDto> AllActiveCandidate() {
-        // Exception throw nahi karni hai, bas khali list return karni hai
+       
         List<Candidate> activeCandidates = candidateRepo.findAll().stream()
                 .filter(Candidate::isIsverified)
                 .toList();
