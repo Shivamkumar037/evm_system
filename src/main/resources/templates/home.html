@@ -142,7 +142,7 @@
         <div class="mt-4">
             <div th:if="${#authentication.name == 'anonymousUser'}">
                 <a th:href="@{/public/login_page}" class="btn-blue-3d">Secure Login</a>
-                <a th:href="@{/public/signup_form}" class="btn-outline-3d">Create New Account</a>
+                <!-- <a th:href="@{/public/signup_form}" class="btn-outline-3d">Create New Account</a> -->
             </div>
             <div th:unless="${#authentication.name == 'anonymousUser'}">
                 <a th:href="@{/Voter_Controller/Voter}" class="btn-blue-3d">Go to Dashboard</a>
