@@ -210,11 +210,8 @@ public class PublicCOntroller {
         }
 
         try {
-            // 2. User Creation & Duplicate Check
-            // Note: userService.createUser mein check karein agar email pehle se hai toh exception throw karein
+          
             SignupResponceDto userDto = userService.createUser(signupRequestDto);
-
-            // 3. Manual Auto-Login (OTP bypassed)
             var userDetails = userService.findByEmail(userDto.getEmail());
             Authentication auth = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities());
@@ -223,14 +220,12 @@ public class PublicCOntroller {
             context.setAuthentication(auth);
             SecurityContextHolder.setContext(context);
 
-            // 4. Save Context in Session (Important for Persistence)
             securityContextRepository.saveContext(context, request, response);
 
-            // 5. Redirect to Voter Dashboard
             return "redirect:/Voter_Controller/Voter";
 
         } catch (Exception e) {
-            // Agar user already exist karta hai ya koi error aata hai
+    
             bindingResult.rejectValue("email", "error.user", "Member already exists with this email!");
             return "signup_page";
         }
