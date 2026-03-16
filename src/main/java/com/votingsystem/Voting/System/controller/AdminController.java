@@ -33,7 +33,7 @@ public class AdminController {
     private final VotingService votingService;
     @GetMapping("/create_member")
     public String create(Model model) {
-        // model.addAttribute("", new SignupRequestDto()); <-- Ye galat tha (Empty key)
+       
         if (!model.containsAttribute("signup_user")) {
             model.addAttribute("signup_user", new SignupRequestDto());
         }
@@ -48,11 +48,10 @@ public class AdminController {
         if (signupRequestDto.getDob() != null) {
             int age = Period.between(signupRequestDto.getDob(), LocalDate.now()).getYears();
             if (age < 18) {
-                bindingResult.rejectValue("dob", "error.dob", "Age must be 18 or older");
+                bindingResult.rejectValue("dob", "error.dob", "Age is not grater then 18");
             }
         }
 
-        // AGAR ERROR HAI TO REDIRECT NA KAREIN (Warna error message gayab ho jayenge)
         if (bindingResult.hasErrors()) {
             return "signupmemberr";
         }
