@@ -46,9 +46,9 @@ public class MamberController {
         } else if ("start".equals(status)) {
             model.addAttribute("activeCandidates", candidateService.AllActiveCandidate());
         }
-        return "Member"; // Ensure file is Member.html
+        return "Member";
     }
-    @GetMapping("/allInActivecandidate") // URL consistent rakha HTML ke hisab se
+    @GetMapping("/allInActivecandidate") 
     public String getInActive(Model model) {
         List<CandidateResponceDto> list = candidateService.AllInActiveCandidate();
         model.addAttribute("activeInCandidates", list);
