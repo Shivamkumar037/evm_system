@@ -199,7 +199,7 @@ public class PublicCOntroller {
                          HttpServletResponse response,
                          Model model) {
 
-        // 1. Age Validation (18+) aur Form Validation
+       
         if (bindingResult.hasErrors() || signupRequestDto.getDob() == null ||
                 java.time.Period.between(signupRequestDto.getDob(), java.time.LocalDate.now()).getYears() < 18) {
 
