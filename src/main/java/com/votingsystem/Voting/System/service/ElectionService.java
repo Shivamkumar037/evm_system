@@ -32,17 +32,17 @@ public class ElectionService {
         Status current = electionStatus.getStatus();
 
         if (current == Status.Stop) {
-            // RESET LOGIC YAHAN HONA CHAHIYE: Results dikhne ke baad jab system rest pe jaye
-            candidateService.candidateInitialize(); // Ab votes 0 honge
+           
+            candidateService.candidateInitialize();
             userService.InitializeUser();
             electionStatus.setStatus(Status.Rest);
 
         } else if (current == Status.Rest) {
-            // Election Start hone par kuch reset nahi karna
+            
             electionStatus.setStatus(Status.Start);
 
         } else {
-            // START se STOP (Yahan results calculate honge, reset nahi!)
+           
             electionStatus.setStatus(Status.Stop);
         }
 
