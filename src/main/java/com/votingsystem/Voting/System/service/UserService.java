@@ -52,7 +52,7 @@ public class UserService implements UserDao {
         user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
 
         Authority auth = new Authority();
-        // Aapke schema ke mutabiq String set karna
+       
         auth.setRole(Role.ROLE_Voter);
         user.setAuthorities(Set.of(auth));
         user.setIsverified(false);
