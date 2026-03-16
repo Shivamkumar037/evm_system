@@ -21,6 +21,7 @@ public class VotingSystemApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VotingSystemApplication.class, args);
 	}
+	// default user admin member yha se create kr rha hau me 
     @Bean
     public CommandLineRunner defaultconfig(UserRepo userService, PasswordEncoder passwordEncoder) {
         return args -> {
@@ -52,7 +53,7 @@ public class VotingSystemApplication {
 dto.setPassword(passwordEncoder.encode(password));
             userService.save(dto);
         } catch (Exception e) {
-            System.out.println("ℹ Skip: User " + email + " already present.");
+            System.out.println("Skip: User " + email + " user phle se hai db me .");
         }
     }
 }
