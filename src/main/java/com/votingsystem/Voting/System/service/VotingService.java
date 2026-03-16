@@ -22,7 +22,7 @@ public class VotingService {
     private final UserRepo userRepo;
     private final CandidateRepo candidateRepo;
     private ElectionRepository electionRepo;
-    // In-Memory Flag (Resets on server restart)
+    
     private static boolean isVotingStarted = false;
 
     public void startVoting() { isVotingStarted = true; }
@@ -42,29 +42,27 @@ public class VotingService {
 
     @Transactional
     public boolean votetoCandidate(String userEmail, String candidateEmail) {
-        // 1. Database se check karein ki voting sach mein START hai ya nahi
+        // databse me check krke btayega ki user hai db me ya nahi
         ElectionStatus electionStatus = electionRepo.findById(1).orElse(null);
         if (electionStatus == null || electionStatus.getStatus() != Status.Start) {
             return false; // Election start nahi hua ya rest/stop par hai
         }
 
-        // 2. User dhundhein aur check karein ki wo pehle vote toh nahi kar chuka
+        // logic hai dekhne ka ki user ne vote phle kiya hai ya nhi ager kiya hoga to vote nhi kr skta
         User user = userRepo.findByEmail(userEmail)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if (user.isIsvoted()) {
-            return false; // User already voted
+            return false; // user ne vote kr liya hai 
         }
 
-        // 3. Candidate dhundhein
+        
         Candidate candidate = candidateRepo.findByEmail(candidateEmail)
                 .orElseThrow(() -> new CandidateNotExistException("Invalid Candidate"));
 
-        // 4. Vote count badhayein aur user ka status update karein
         candidate.setTotalVote(candidate.getTotalVote() + 1);
         user.setIsvoted(true);
 
-        // 5. Save changes
         candidateRepo.save(candidate);
         userRepo.save(user);
 
