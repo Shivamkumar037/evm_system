@@ -29,10 +29,8 @@ public class EmailOtpService {
 
     @Transactional
     public void otpGenerator(String email, String name) {
-        // Step 1: Purana koi bhi OTP ho is email ka, use delete karo (Fixes Retry issue)
         otpRepo.findByEmail(email.trim()).ifPresent(otpRepo::delete);
 
-        // Step 2: Naya OTP generate karo
         String otp = String.format("%04d", ThreadLocalRandom.current().nextInt(1000, 10000));
 
         OtpEntity otpObj = new OtpEntity();
@@ -45,15 +43,12 @@ public class EmailOtpService {
 
     @Transactional
     public boolean verifyOtp(String email, String otp) {
-        // Email aur OTP dono ko trim karke check karein
         Optional<OtpEntity> otpInDb = otpRepo.findByEmail(email.trim());
 
         if (otpInDb.isPresent() && otpInDb.get().getOtp().equals(otp.trim())) {
-            // Sahi OTP milte hi use delete kar do taaki session fresh rahe
             otpRepo.delete(otpInDb.get());
             return true;
         }
-        // Agar galat OTP hai, toh delete mat karo, user ko dubara try karne do
         return false;
     }
 }
