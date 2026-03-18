@@ -1,87 +1,37 @@
-EVM System
+# EVM System
 
-A simple Electronic Voting Machine (EVM) System built using Java. This project is designed to manage the voting process in a simple and structured way. It allows users to vote for available candidates and shows the final voting result after counting all votes.
+The EVM System is a simple Java-based project that simulates the basic working of an electronic voting machine. It allows users to vote for candidates, count votes, and display the final result in a clear and organized way. This project is useful for understanding basic Java concepts and implementing a real-world voting process in a console-based application.
 
-Features
+## Features
 
-Add and manage candidates
+- Simple and user-friendly voting system
+- Candidate selection and vote casting
+- Vote counting functionality
+- Result declaration based on total votes
+- Console-based Java application
+- Easy to understand for beginners
 
-Cast votes in a simple way
+## Technologies Used
 
-Count total votes
+- Java
+- Object-Oriented Programming
+- Console Input/Output
 
-Display voting results
+## Project Overview
 
-Show the winner based on votes
+This project demonstrates how an electronic voting machine works in a simplified way. It manages the voting process from candidate selection to final result generation. The system records votes, processes them, and shows the winner based on the number of votes received.
 
-Console-based implementation
+## How It Works
 
-Easy to understand for beginners
-
-
-Technologies Used
-
-Java
-
-Object-Oriented Programming
-
-Console Input/Output
-
-
-Project Overview
-
-This project simulates the working of an electronic voting machine. It is useful for understanding how voting logic works in a programming project. The system handles candidate selection, vote counting, and result declaration in an organized manner.
-
-How It Works
-
-1. The system displays the list of candidates.
-
-
-2. The user selects a candidate to vote for.
-
-
+1. The system displays the list of available candidates.
+2. The user selects a candidate and casts a vote.
 3. The vote is recorded by the system.
+4. After voting is completed, the system counts all votes.
+5. The final result is displayed along with the winning candidate.
 
-
-4. After all votes are completed, the system counts the votes.
-
-
-5. The final result is displayed along with the winner.
-
-
-
-How to Run
+## How to Run
 
 1. Clone the repository:
 
-
-
+```bash
 git clone https://github.com/Shivamkumar037/evm_system.git
-
-2. Open the project in any Java IDE such as IntelliJ IDEA, Eclipse, or VS Code.
-
-
-3. Compile and run the main Java file.
-
-
-
-Purpose of the Project
-
-The main purpose of this project is to practice Java programming concepts through a real-world inspired example. It helps in improving understanding of classes, objects, conditions, loops, and basic project structure.
-
-Future Enhancements
-
-Add database integration
-
-Add login/authentication system
-
-Create a graphical user interface
-
-Store voting data permanently
-
-Improve input validation and security
-
-
-Author
-
-Shivam Kumar
